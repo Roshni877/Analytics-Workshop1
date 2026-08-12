@@ -9,17 +9,16 @@ ENV PYTHONUNBUFFERED=1
 # Set working directory
 WORKDIR /app
 
-# Install runtime dependencies only (postgresql-client for debugging)
+# Install runtime dependencies only
 RUN apk add --no-cache postgresql-client libpq
 
-# Copy requirements file for better layer caching
+# Copy requirements file
 COPY requirements.txt /app/
 
 # Install Python dependencies
-# Note: psycopg2-binary 2.9.9 has pre-built wheels for Python 3.12-alpine
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application code
+# Copy application code
 COPY . /app
 
 # Expose port for Flask app
